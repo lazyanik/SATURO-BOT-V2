@@ -66,7 +66,7 @@ module.exports = {
 
       return `
 ╔═════════════════════╗
-║   ⚡ SATURO BOT SYSTEM ⚡
+║ ⚡ SATURO BOT SYSTEM ⚡
 ╠═════════════════════╣
 ║ ⏳ Uptime   : ${d}d ${h}h ${m}m ${s}s
 ║ 📅 Date     : ${date}
@@ -81,9 +81,9 @@ module.exports = {
 ║
 ║ ⚙️ PID      : ${process.pid}
 ║ 🛠 Node.js  : ${process.version}
-║ 🧘‍♂️ Owner   : Anik Islam Sadik
+║ ⚡ Owner   : Anik Islam Sadik
 ╠═════════════════════╣
-║        ✅ SYSTEM RUNNING
+║    ✅ SYSTEM RUNNING
 ╚═════════════════════╝
 `;
     };
