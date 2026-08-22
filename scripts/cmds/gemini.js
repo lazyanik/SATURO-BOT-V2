@@ -5,7 +5,6 @@ const path = require("path");
 module.exports = {
   config: {
     name: "gemini",
-    aliases: ["gptimg"],
     version: "4.0",
     author: "xalman",
     countDown: 5,
