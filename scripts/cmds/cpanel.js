@@ -23,7 +23,7 @@ function getHostingName() {
 module.exports = {
   config: {
     name: "cpanel",
-    version: "0.0.7",
+    version: "4.0",
     author: "Anik Islam Sadik",
     category: "info",
     guide: { en: "{pn} - Shows bot Info Panel." }
@@ -120,7 +120,7 @@ module.exports = {
         ctx.font = "bold 28px Arial";
         ctx.textAlign = "left";
         ctx.textBaseline = "alphabetic";
-        ctx.fillText("aLya BOT V3", 30, 40);
+        ctx.fillText("SATURO BOT V2", 30, 40);
 
         ctx.font = "20px Arial";
         ctx.textAlign = "right";
@@ -224,4 +224,4 @@ function formatUptime(ms) {
   if (seconds > 0 && parts.length === 0) parts.push(`${seconds}s`);
 
   return parts.join(" ");
-}
+        }
