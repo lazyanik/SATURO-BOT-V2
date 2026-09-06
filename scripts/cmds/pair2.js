@@ -8,9 +8,9 @@ module.exports = {
     name: "pair2",
     aliases: ["pr2","pair 2"],
     version: "1.1.0",
-    author: "rX (converted to GoatBot)",
+    author: "Anik Islam Sadik",
     role: 0,
-    category: "fun",
+    category: "love",
     shortDescription: "Pair two users with love percentage",
     longDescription: "Pair two users with a fun compatibility score and image",
     guide: {
