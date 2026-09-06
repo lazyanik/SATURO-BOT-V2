@@ -6,7 +6,8 @@ const path = require("path");
 module.exports = {
   config: {
     name: "pair5",
-    author: "Nyx x ariyan x fahad x saim",
+    aliases: ["pr5", "pair 5"],
+    author: "Anik Islam Sadik",
     category: "love",
   },
 
