@@ -3,7 +3,7 @@ const axios = require("axios");
 module.exports = {
   config: {
     name: "anisearch",
-    aliases: ["ani"],
+    aliases: ["ani", "anisr"],
     version: "2.2",
     author: "Anik Islam Sadik",
     countDown: 3,
