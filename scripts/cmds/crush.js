@@ -96,7 +96,7 @@ module.exports = {
       const name2 = allUserInfo[targetID]?.name || "Crush";
       const lovePercent = Math.floor(Math.random() * 21) + 80;
       const messageBody = `╭━━━━━━━ ❤️ ━━━━━━━╮\n` +
-                          `  🌹 𝐂𝐑𝐔𝐒𝐇 𝐌𝐀𝐓𝐂𝐇 🌹\n` +
+                          `       🌹 𝐂𝐑𝐔𝐒𝐇 𝐌𝐀𝐓𝐂𝐇 🌹\n` +
                           `╰━━━━━━━ ❤️ ━━━━━━━╯\n\n` +
                           `✨ ${name1} \n` +
                           `💞 ${name2}\n\n` +
