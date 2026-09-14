@@ -30,7 +30,7 @@ module.exports = {
 
         return api.sendMessage(
 `╭━━━〔 💕 〕━━━╮
-      𝗞-𝗣𝗢𝗣 𝗖𝗢𝗨𝗣𝗟𝗘
+   𝗞-𝗣𝗢𝗣 𝗖𝗢𝗨𝗣𝗟𝗘
 ━━━━━━━━━━━━━━━
 📦 Total Collection
 ✨ ${data.total_cdp}
