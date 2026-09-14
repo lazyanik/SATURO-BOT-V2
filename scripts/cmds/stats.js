@@ -1,123 +1,77 @@
-/**
- * Performance Stats Command - Text-based system statistics
- * Usage: {prefix}stats
- */
-
-const cooldownManager = require("../../func/cooldownManager.js");
-const analyticsBatcher = require("../../func/analyticsBatcher.js");
-const os = require("os");
-const process = require("process");
-
-function formatBytes(bytes) {
-	if (bytes === 0) return "0 B";
-	const k = 1024;
-	const sizes = ["B", "KB", "MB", "GB", "TB"];
-	const i = Math.floor(Math.log(bytes) / Math.log(k));
-	return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
-}
-
-function formatUptime(seconds) {
-	const days = Math.floor(seconds / 86400);
-	const hours = Math.floor((seconds % 86400) / 3600);
-	const minutes = Math.floor((seconds % 3600) / 60);
-	const secs = Math.floor(seconds % 60);
-	return `${days}d ${hours}h ${minutes}m ${secs}s`;
-}
-
 module.exports = {
-	config: {
-		name: "stats",
-		version: "3.0.0",
-		author: "NeoKEX",
-		countDown: 5,
-		role: 0,
-		shortDescription: {
-			en: "View bot system statistics"
-		},
-		longDescription: {
-			en: "View detailed performance metrics including memory usage, uptime, command stats, and active optimizations"
-		},
-		category: "system",
-		guide: {
-			en: "{pn} - View system stats\n{pn} clear - Trigger garbage collection"
-		}
-	},
+  config: {
+    name: "stats",
+    aliases: ["dbstatus", "dbs"],
+    version: "1.0.4",
+    author: "Anik Islam Sadik",
+    role: 2,
+    category: "Admin",
+    shortDescription: "Check MongoDB status with stylish report",
+    guide: "{p}stats",
+    cooldowns: 5
+  },
 
-	onStart: async function ({ message, args }) {
-		if (args[0] === "clear") {
-			if (global.gc) {
-				global.gc();
-				return message.reply("[ SYSTEM ] Garbage collector triggered successfully.");
-			}
-			return message.reply("[ SYSTEM ] GC not exposed. Start with --expose-gc flag.");
-		}
+  onStart: async function({ api, event }) {
+    const { threadID, messageID } = event;
+    
+    try {
+      await api.setMessageReaction("⏳", messageID, (err) => {}, true);
+      
+      const mongoose = require("mongoose");
+      
+      if (mongoose.connection.readyState !== 1) {
+        await api.setMessageReaction("❌", messageID, (err) => {}, true);
+        return api.sendMessage("❌ 𝗗𝗮𝘁𝗮𝗯𝗮𝘀𝗲 𝗶𝘀 𝗻𝗼𝘁 𝗰𝗼𝗻𝗻𝗲𝗰𝘁𝗲𝗱!", threadID, messageID);
+      }
 
-		try {
-			// System Info
-			const uptime = formatUptime(process.uptime());
-			const memory = process.memoryUsage();
-			const totalMem = os.totalmem();
-			const freeMem = os.freemem();
+      const admin = mongoose.connection.db.admin();
+      const status = await admin.command({ serverStatus: 1 });
+      
+      const uptimeSec = status.uptime;
+      const d = Math.floor(uptimeSec / (3600 * 24));
+      const h = Math.floor((uptimeSec % (3600 * 24)) / 3600);
+      const m = Math.floor((uptimeSec % 3600) / 60);
+      const s = Math.floor(uptimeSec % 60);
+      const uptimeStr = `${d}d ${h}h ${m}m ${s}s`;
 
-			// Bot Stats
-			const commandCount = global.GoatBot?.commands?.size || 0;
-			const eventCount = global.GoatBot?.eventCommands?.size || 0;
-			const aliasCount = global.GoatBot?.aliases?.size || 0;
-			const threadCount = global.db?.allThreadData?.length || 0;
-			const userCount = global.db?.allUserData?.length || 0;
+      const version = status.version;
+      const memory = status.mem.resident;
 
-			// Performance Stats
-			const cooldownStats = cooldownManager.getStats();
-			const analyticsStats = analyticsBatcher.getStats();
+      const currentConnections = status.connections.current;
+      const availableConnections = status.connections.available;
+      const totalCreated = status.connections.totalCreated;
 
-			// Get real optimization status
-			const config = global.GoatBot?.config || {};
-			const typingEnabled = config.typingIndicator?.enable === true ? "ON" : "OFF";
-			const spamStatus = global.client?.spamTracker ? `ON (${global.client.spamTracker.size || 0} tracked)` : "OFF";
-			const cooldownEntries = cooldownStats.totalEntries || 0;
-			const analyticsPending = analyticsStats.bufferSize || 0;
+      const queries = status.opcounters.query;
+      const inserts = status.opcounters.insert;
+      const updates = status.opcounters.update;
 
-			// Build the message with up command design
-			const statsMsg = 
-				`┌─── BOT STATISTICS ───×\n` +
-				`│\n` +
-				`│ [~] Uptime: ${uptime}\n` +
-				`│ [~] Commands: ${commandCount}\n` +
-				`│ [~] Events: ${eventCount}\n` +
-				`│ [~] Aliases: ${aliasCount}\n` +
-				`│ [~] Threads: ${threadCount}\n` +
-				`│ [~] Users: ${userCount}\n` +
-				`│\n` +
-				`├─── MEMORY USAGE ───×\n` +
-				`│ [~] Heap Used: ${formatBytes(memory.heapUsed)}\n` +
-				`│ [~] Heap Total: ${formatBytes(memory.heapTotal)}\n` +
-				`│ [~] RSS: ${formatBytes(memory.rss)}\n` +
-				`│ [~] External: ${formatBytes(memory.external)}\n` +
-				`│\n` +
-				`├─── SYSTEM MEMORY ───×\n` +
-				`│ [~] Total: ${formatBytes(totalMem)}\n` +
-				`│ [~] Free: ${formatBytes(freeMem)}\n` +
-				`│ [~] Used: ${formatBytes(totalMem - freeMem)}\n` +
-				`│\n` +
-				`├─── PERFORMANCE ───×\n` +
-				`│ [~] Cooldown Checks: ${cooldownStats.totalChecks}\n` +
-				`│ [~] Blocked Commands: ${cooldownStats.blocked}\n` +
-				`│ [~] Analytics Buffered: ${analyticsStats.buffered}\n` +
-				`│ [~] Analytics Flushed: ${analyticsStats.flushed}\n` +
-				`│\n` +
-				`├─── OPTIMIZATIONS ───×\n` +
-				`│ [~] Spam Tracker: ${spamStatus}\n` +
-				`│ [~] Cooldown Manager: ON (${cooldownEntries} entries)\n` +
-				`│ [~] Analytics Batching: ON (${analyticsPending} pending)\n` +
-				`│ [~] Typing Indicator: ${typingEnabled}\n` +
-				`│ [~] Graceful Shutdown: ON\n` +
-				`└───────────────×\n` +
-				`Node.js ${process.version} | ${os.platform()} ${os.arch()} | ${new Date().toLocaleString()}`;
+      const responseText = 
+        `╭━━━〔 ✦ 𝗗𝗕 𝗠𝗢𝗡𝗜𝗧𝗢𝗥 ✦ 〕━━━╮\n` +
+        `┃\n` +
+        `┃  ● STATUS   :  ONLINE\n` +
+        `┃  ● UPTIME   : ${uptimeStr}\n` +
+        `┃  ● VERSION  : ${version}\n` +
+        `┃  ● MEMORY   : ${memory} MB\n` +
+        `┃\n` +
+        `┣━━〔 ✧ 𝗖𝗢𝗡𝗡𝗘𝗖𝗧𝗜𝗢𝗡𝗦 ✧〕━━━━┫\n` +
+        `┃  😸 Active    → ${currentConnections}\n` +
+        `┃  👨‍💻 Available → ${availableConnections}\n` +
+        `┃  📜 Total     → ${totalCreated}\n` +
+        `┃\n` +
+        `┣━━〔 📊 𝗦𝗬𝗦𝗧𝗘𝗠 〕━━━━━┫\n` +
+        `┃  🔍 Query  → ${queries}\n` +
+        `┃  📥 Insert → ${inserts}\n` +
+        `┃  🔄 Update → ${updates}\n` +
+        `┃\n` +
+        `╰━━━━━━〔 ♡ 𝗗𝗔𝗧𝗔𝗕𝗔𝗦𝗘  ♡ 〕━━━━━━╯`;
 
-			return message.reply(statsMsg);
-		} catch (err) {
-			console.error("Stats error:", err);
-			return message.reply("[ ERROR ] Failed to generate stats: " + err.message);
-		}
-	}
+      await api.sendMessage(responseText, threadID, messageID);
+      await api.setMessageReaction("✅", messageID, (err) => {}, true);
+
+    } catch (error) {
+      console.error("DBStatus Error:", error);
+      await api.setMessageReaction("❌", messageID, (err) => {}, true);
+      return api.sendMessage(`⚠️ 𝗘𝗿𝗿𝗼𝗿: ${error.message}`, threadID, messageID);
+    }
+  }
 };
