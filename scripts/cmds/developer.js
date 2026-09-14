@@ -5,8 +5,8 @@ module.exports = {
         config: {
                 name: "developer",
                 aliases: ["dev"],
-                version: "1.0",
-                author: "NeoKEX",
+                version: "2.0",
+                author: "Anik Islam Sadik",
                 countDown: 5,
                 role: 4,
                 description: {
