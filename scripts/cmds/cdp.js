@@ -81,7 +81,7 @@ module.exports = {
           {
             body:
 `╭━━━〔 💕 〕━━━╮
-      𝗞-𝗣𝗢𝗣 𝗖𝗢𝗨𝗣𝗟𝗘
+  𝗞-𝗣𝗢𝗣 𝗖𝗢𝗨𝗣𝗟𝗘
 ━━━━━━━━━━━━━━━
 💞 Matching Couple DP
 ✨ Random Collection
