@@ -4,7 +4,7 @@ const fs = require("fs-extra");
 module.exports = {
   config: {
     name: "crush",
-    author: "Fahad Islam",
+    author: "Anik Islam Sadik",
     role: 0,
     shortDescription: "Get Crush Pair with 10 background choices",
     longDescription: "Mention/Reply to match, or just type /crush for auto random match based on gender.",
@@ -96,7 +96,7 @@ module.exports = {
       const name2 = allUserInfo[targetID]?.name || "Crush";
       const lovePercent = Math.floor(Math.random() * 21) + 80;
       const messageBody = `╭━━━━━━━ ❤️ ━━━━━━━╮\n` +
-                          `       🌹 𝐂𝐑𝐔𝐒𝐇 𝐌𝐀𝐓𝐂𝐇 🌹\n` +
+                          `  🌹 𝐂𝐑𝐔𝐒𝐇 𝐌𝐀𝐓𝐂𝐇 🌹\n` +
                           `╰━━━━━━━ ❤️ ━━━━━━━╯\n\n` +
                           `✨ ${name1} \n` +
                           `💞 ${name2}\n\n` +
