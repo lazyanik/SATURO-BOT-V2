@@ -3,7 +3,7 @@ module.exports = {
     name: "slot",
     aliases: ["slots"],
     version: "7.5",
-    author: "xalman",
+    author: "Anik Islam Sadik",
     role: 0,
     countDown: 5,
     category: "GAMES",
@@ -75,7 +75,7 @@ module.exports = {
       return message.reply(`🚫 Daily limit reached (${maxSpins} spins)`);
     }
 
-    const items = ["🍎","🍐","🍑","🍒","🍓","🍇","🍉","🍊","🍋","🍌","🍍","🥭"];
+    const items = ["❤️", "🧡", "💛", "💚", "💙", "💜", "🖤", "🤍", "🤎", "💖", "💗", "💘"];
     let s = [];
 
     const winRoll = Math.random() * 100;
