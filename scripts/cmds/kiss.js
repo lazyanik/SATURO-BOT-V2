@@ -21,7 +21,7 @@ module.exports = {
     let targetID = mention || event.messageReply?.senderID;
 
     if (!targetID) {
-      return api.sendMessage("Whom do you want to kiss? Please tag or reply to someone!", event.threadID, event.messageID);
+      return api.sendMessage("Whom do you want to kiss? Please tag or reply to someone! 💋", event.threadID, event.messageID);
     }
 
     const senderID = event.senderID;
@@ -79,13 +79,23 @@ module.exports = {
     const output = path.join(__dirname, "kiss_output.png");
     fs.writeFileSync(output, canvas.toBuffer("image/png"));
 
-    const senderName = await usersData.getName(senderID);
     const targetName = event.mentions[mention] 
       ? event.mentions[mention].replace("@", "") 
       : (await usersData.getName(targetID) || "Friend");
 
+    const kissMessages = [
+      "Ummaaah! A sweet kiss for you~ 💋✨",
+      "Sending you all my warm love! 😘❤️",
+      "Muah! Stay cute always~ 💋💖",
+      "A big romantic kiss just for you! 🥰💋",
+      "Here's a soft kiss on your cheek~ 💋🌸",
+      "Catch this flying kiss! 😘 fly... 💋✨"
+    ];
+
+    const randomMessage = kissMessages[Math.floor(Math.random() * kissMessages.length)];
+
     api.sendMessage({
-      body: `❤️ Kiss time!\n${senderName} gave a kiss to ${targetName}! 💋`,
+      body: randomMessage,
       attachment: fs.createReadStream(output),
       mentions: [{ tag: targetName, id: targetID }],
     }, event.threadID, () => {
