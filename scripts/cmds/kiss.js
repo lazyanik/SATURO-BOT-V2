@@ -1,4 +1,4 @@
-const fs = require("fs");
+const fs = require("fs-extra");
 const path = require("path");
 const axios = require("axios");
 const { loadImage, createCanvas } = require("canvas");
@@ -6,12 +6,12 @@ const { loadImage, createCanvas } = require("canvas");
 module.exports = {
   config: {
     name: "kiss",
-    version: "1.5",
+    version: "1.6",
     author: "Anik Islam Sadik",
     countDown: 5,
     role: 0,
     shortDescription: "A fun kiss picture!",
-    longDescription: "A fun command to create a kiss picture with the given positions.",
+    longDescription: "A fun command to create a kiss picture with correct positions based on gender.",
     category: "fun",
     guide: "{pn} @mention or reply",
   },
@@ -20,8 +20,9 @@ module.exports = {
     let mention = Object.keys(event.mentions)[0];
     let targetID = mention || event.messageReply?.senderID;
 
-    if (!targetID)
-      return api.sendMessage("কাকে চুমু দিবে? ট্যাগ কর বা কারো রিপ্লাই দাও!", event.threadID, event.messageID);
+    if (!targetID) {
+      return api.sendMessage("Whom do you want to kiss? Please tag or reply to someone!", event.threadID, event.messageID);
+    }
 
     const senderID = event.senderID;
 
@@ -38,49 +39,59 @@ module.exports = {
       }
     };
 
+    const senderData = await usersData.get(senderID);
+    const senderGender = senderData.gender;
+    
+    let maleAvatarPath, femaleAvatarPath;
+
+    if (senderGender === 1 || senderGender === "FEMALE") {
+      femaleAvatarPath = await getAvatar(senderID);
+      maleAvatarPath = await getAvatar(targetID);
+    } else {
+      maleAvatarPath = await getAvatar(senderID);
+      femaleAvatarPath = await getAvatar(targetID);
+    }
+
     const bg = await loadImage("https://i.imgur.com/VniSzhD.png"); 
     const canvas = createCanvas(bg.width, bg.height);
     const ctx = canvas.getContext("2d");
     ctx.drawImage(bg, 0, 0);
 
-    const senderAvatarPath = await getAvatar(senderID);
-    const targetAvatarPath = await getAvatar(targetID);
+    const maleAvatar = await loadImage(maleAvatarPath);
+    const femaleAvatar = await loadImage(femaleAvatarPath);
 
-    const senderAvatar = await loadImage(senderAvatarPath);
-    const targetAvatar = await loadImage(targetAvatarPath);
-
-    
     ctx.save();
     ctx.beginPath();
     ctx.arc(340, 120, 60, 0, Math.PI * 2);
     ctx.closePath();
     ctx.clip();
-    ctx.drawImage(targetAvatar, 280, 60, 120, 120);
+    ctx.drawImage(femaleAvatar, 280, 60, 120, 120);
     ctx.restore();
 
-    
     ctx.save();
     ctx.beginPath();
     ctx.arc(500, 70, 60, 0, Math.PI * 2);
     ctx.closePath();
     ctx.clip();
-    ctx.drawImage(senderAvatar, 440, 10, 120, 120);
+    ctx.drawImage(maleAvatar, 440, 10, 120, 120);
     ctx.restore();
 
     const output = path.join(__dirname, "kiss_output.png");
     fs.writeFileSync(output, canvas.toBuffer("image/png"));
 
     const senderName = await usersData.getName(senderID);
-    const targetName = event.mentions[mention] || (event.messageReply?.senderName || "Friend");
+    const targetName = event.mentions[mention] 
+      ? event.mentions[mention].replace("@", "") 
+      : (await usersData.getName(targetID) || "Friend");
 
     api.sendMessage({
-      body: `❤️ Kiss time! \n${senderName} gave a kiss to ${targetName}! 💋`,
+      body: `❤️ Kiss time!\n${senderName} gave a kiss to ${targetName}! 💋`,
       attachment: fs.createReadStream(output),
       mentions: [{ tag: targetName, id: targetID }],
     }, event.threadID, () => {
-      fs.unlinkSync(output);
-      fs.unlinkSync(senderAvatarPath);
-      fs.unlinkSync(targetAvatarPath);
+      if (fs.existsSync(output)) fs.unlinkSync(output);
+      if (fs.existsSync(maleAvatarPath)) fs.unlinkSync(maleAvatarPath);
+      if (fs.existsSync(femaleAvatarPath)) fs.unlinkSync(femaleAvatarPath);
     }, event.messageID);
   }
 };
