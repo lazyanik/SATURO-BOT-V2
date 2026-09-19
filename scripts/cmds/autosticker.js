@@ -22,31 +22,43 @@ const stickerIDs = [
   "392309890866323",
   "1350645153441310",
   "456536873422758",
-  "2041014432792697"
+  "2041014432792697",
+  "1747082948936290",
+  "2041017422792398",
+  "456541416755637",
+  "1747092188935366",
+  "1350636100108882",
+  "2041011389459668"
 ];
 
 module.exports = {
   config: {
     name: "autosticker",
     aliases: ["sticker", "stickerlist", "autoreplysticker", "asticker"],
-    version: "1.8",
+    version: "1.9",
     author: "Anik Islam Sadik",
-    countDown: 0,
+    countDown: 5,
     role: 0,
     shortDescription: "Replies to stickers & shows sticker list",
-    longDescription: "Automatically replies with a sticker when a sticker is sent. Shows total sticker count on command execution.",
+    longDescription: "Automatically replies with a sticker when a human user sends a sticker. Shows total sticker count on command execution.",
     category: "fun",
     guide: "Send a sticker or use command: {pn} or {pn} list"
   },
 
-  // Handles text command executions (with prefix for public, prefix/prefixless for admins natively)
+  // Handles text command executions
   onStart: async function ({ api, event }) {
     return api.sendMessage(`Auto Sticker is active! Total stickers available in database: ${stickerIDs.length}`, event.threadID, event.messageID);
   },
 
   // Handles automatic sticker replies when someone sends a sticker attachment
-  onChat: async function ({ api, event }) {
+  onChat: async function ({ api, event, usersData }) {
     if (!event || event.senderID === api.getCurrentUserID()) return;
+
+    // Check if sender is a bot user (prevents bot loops)
+    if (usersData) {
+      const senderData = await usersData.get(event.senderID);
+      if (senderData && senderData.isBot) return;
+    }
 
     if (event.attachments && event.attachments.length > 0 && event.attachments[0].type === "sticker") {
       const randomSticker = stickerIDs[Math.floor(Math.random() * stickerIDs.length)];
