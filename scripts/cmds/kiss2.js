@@ -6,8 +6,8 @@ const { createCanvas, loadImage } = require('canvas');
 module.exports = {
     config: {
         name: "kiss2",
-        version: "3.5.0",
-        author: "xalman",
+        version: "3.5.1",
+        author: "Anik Islam Sadik",
         countDown: 5,
         role: 0,
         description: "Kiss someone using mention, reply, or UID",
@@ -35,7 +35,10 @@ module.exports = {
 
             const senderName = senderInfo.name;
             const mentionName = mentionInfo.name;
-            const senderGender = senderInfo.gender; 
+            
+            // Normalize gender check (Facebook API: 1 = Female, 2 = Male)
+            // Checks for numerical format or lowercase string values ("female" / "1")
+            const isSenderFemale = senderInfo.gender === 1 || String(senderInfo.gender).toLowerCase() === "female" || String(senderInfo.gender) === "1";
 
             const backgroundUrl = "https://i.ibb.co/jjhvv0j/74e00c6d62a7.jpg";
             const avatarSenderUrl = `https://graph.facebook.com/${senderID}/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662`;
@@ -51,14 +54,18 @@ module.exports = {
             const ctx = canvas.getContext('2d');
             ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
 
+            let malePos = { x: 240, y: 190, r: 40 };
+            let femalePos = { x: 320, y: 250, r: 40 };
+
             let senderPos, mentionPos;
 
-            if (senderGender === 2) { 
-                senderPos = { x: 320, y: 250, r: 40 };
-                mentionPos = { x: 240, y: 190, r: 40 };
+            // Positioning logic based on sender gender
+            if (isSenderFemale) {
+                senderPos = femalePos;
+                mentionPos = malePos;
             } else {
-                senderPos = { x: 240, y: 190, r: 40 };
-                mentionPos = { x: 340, y: 250, r: 40 };
+                senderPos = malePos;
+                mentionPos = femalePos;
             }
 
             ctx.save();
@@ -75,8 +82,10 @@ module.exports = {
             ctx.drawImage(avatarMention, mentionPos.x - mentionPos.r, mentionPos.y - mentionPos.r, mentionPos.r * 2, mentionPos.r * 2);
             ctx.restore();
 
-            const cachePath = path.join(__dirname, 'cache', `kiss_${Date.now()}.png`);
-            if (!fs.existsSync(path.join(__dirname, 'cache'))) fs.mkdirSync(path.join(__dirname, 'cache'));
+            const cacheDir = path.join(__dirname, 'cache');
+            if (!fs.existsSync(cacheDir)) fs.mkdirSync(cacheDir, { recursive: true });
+            
+            const cachePath = path.join(cacheDir, `kiss_${Date.now()}.png`);
             fs.writeFileSync(cachePath, canvas.toBuffer());
 
             return api.sendMessage({
