@@ -12,7 +12,7 @@ module.exports = {
     role: 0,
     shortDescription: "A fun kiss picture!",
     longDescription: "A fun command to create a kiss picture with correct positions based on gender.",
-    category: "fun",
+    category: "love",
     guide: "{pn} @mention or reply",
   },
 
