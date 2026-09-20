@@ -18,8 +18,6 @@ module.exports = {
     if (author !== event.senderID) return;
     const args = event.body.replace(/ +/g, " ").toLowerCase().split(" ");
 
-    clearTimeout(Reply.unsendTimeout); // Clear the timeout if the user responds within the countdown duration
-
     const form = {
       av: api.getCurrentUserID(),
       fb_api_caller_class: "RelayModern",
@@ -90,13 +88,10 @@ module.exports = {
     }
 
     if (success.length > 0) {
-      api.sendMessage(`Â» The ${args[0] === 'add' ? 'friend request' : 'friend request deletion'} processed for ${success.length} people:\n\n${success.join("\n")}${failed.length > 0 ? `\nÂ» The following ${failed.length} people encountered errors: ${failed.join("\n")}` : ""}`, event.threadID, event.messageID);
+      api.sendMessage(`» The ${args[0] === 'add' ? 'friend request' : 'friend request deletion'} processed for ${success.length} people:\n\n${success.join("\n")}${failed.length > 0 ? `\n» The following ${failed.length} people encountered errors:${failed.join("\n")}` : ""}`, event.threadID, event.messageID);
     } else {
-      api.unsendMessage(messageID); // Unsend the message if the response is incorrect
       return api.sendMessage("Invalid response. Please provide a valid response.", event.threadID);
     }
-
-    api.unsendMessage(messageID); // Unsend the message after it processed
   },
 
   onStart: async function ({ event, api, commandName }) {
@@ -117,15 +112,13 @@ module.exports = {
         + `\nUrl: ${user.node.url.replace("www.facebook", "fb")}`
         + `\nTime: ${moment(user.time * 1009).tz("Asia/Manila").format("DD/MM/YYYY HH:mm:ss")}\n`);
     }
+    
     api.sendMessage(`${msg}\nReply to this message with content: <add: del> <comparison: or "all"> to take action`, event.threadID, (e, info) => {
       global.GoatBot.onReply.set(info.messageID, {
         commandName,
         messageID: info.messageID,
         listRequest,
-        author: event.senderID,
-        unsendTimeout: setTimeout(() => {
-          api.unsendMessage(info.messageID); // Unsend the message after the countdown duration
-        }, this.config.countDown * 1000) // Convert countdown duration to milliseconds
+        author: event.senderID
       });
     }, event.messageID);
   }
