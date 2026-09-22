@@ -29,7 +29,7 @@ module.exports = {
 
 ⏱️ 𝗗𝘂𝗿𝗮𝘁𝗶𝗼𝗻: 6 – 120s (Default: 120)
 
-╰━━━〔 ⚡ Powered by NX AI 〕━━━╯
+╰━━━〔 ⚡ Powered by ANIK  〕━━━╯
 `
     }
   },
