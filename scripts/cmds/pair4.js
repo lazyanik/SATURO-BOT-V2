@@ -13,7 +13,7 @@ module.exports = {
     role: 0,
     shortDescription: 'Pair With you Soulmate',
     longDescription: 'Pair With you Love reply/tag Or Random',
-    category: 'media',
+    category: 'love',
     guide: {
       en: '{p}pair or reply/tag'
     }
