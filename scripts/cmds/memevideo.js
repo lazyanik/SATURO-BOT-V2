@@ -1,11 +1,40 @@
 const axios = require("axios");
+
+const API_CONFIG_URL = "https://raw.githubusercontent.com/goatbotnx/xalmanx210/refs/heads/main/apis.json";
+const API_KEY = "xalman-hub";
+let apiBaseUrl = null;
+let apiConfigRequest = null;
+
+async function getApiBaseUrl() {
+  if (apiBaseUrl) return apiBaseUrl;
+
+  if (!apiConfigRequest) {
+    apiConfigRequest = axios
+      .get(API_CONFIG_URL, { timeout: 15000 })
+      .then(({ data }) => {
+        const baseUrl = data?.[API_KEY];
+
+        if (typeof baseUrl !== "string" || !baseUrl.trim()) {
+          throw new Error(`Missing API key in apis.json: ${API_KEY}`);
+        }
+
+        apiBaseUrl = baseUrl.replace(/\/+$/, "");
+        return apiBaseUrl;
+      })
+      .finally(() => {
+        apiConfigRequest = null;
+      });
+  }
+
+  return apiConfigRequest;
+}
 const fs = require("fs-extra");
 const path = require("path");
 
 module.exports = {
   config: {
     name: "memevideo",
-    aliases: ["memevid"],
+    aliases: ["memevid", "mvid"],
     version: "3.0",
     author: "xalman",
     countDown: 5,
@@ -25,7 +54,7 @@ module.exports = {
 
     for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
       try {
-        const res = await axios.get("https://xalman-apis.vercel.app/api/memevid", { timeout: 10000 });
+        const res = await axios.get(`${await getApiBaseUrl()}/api/memevid`, { timeout: 10000 });
         const videoUrl = res.data.url;
 
         if (!videoUrl) {
@@ -54,7 +83,7 @@ module.exports = {
 
         api.setMessageReaction("✅", messageID, () => {}, true);
 
-        const msg = `🎬 𝗠𝗘𝗠𝗘 𝗩𝗜𝗗𝗘𝗢\n━━━━━━━━━━━━━━━━━━\nHere is your meme! 😺`;
+        const msg = `🎬 𝗠𝗘𝗠𝗘 𝗩𝗜𝗗𝗘𝗢\n━━━━━━━━━━━━━━━━━━\nHere is your meme! 😙`;
 
         return api.sendMessage({
           body: msg,
