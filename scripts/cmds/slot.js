@@ -44,14 +44,9 @@ module.exports = {
 
     const betAmount = parseAmount(args[0]);
     const minBet = 100;
-    const maxBet = 100000000000;
 
     if (isNaN(betAmount) || betAmount < minBet) {
       return message.reply(`🎰 Minimum bet is 100$\nExample: /slot 1k`);
-    }
-
-    if (betAmount > maxBet) {
-      return message.reply(`🚫 Max bet: ${formatMoney(maxBet)}$`);
     }
 
     let userData = await usersData.get(senderID);
@@ -130,7 +125,7 @@ module.exports = {
     await usersData.set(senderID, userData);
 
     const status = win ? `WIN ${multiplier}x 🎉` : "LOSE ❤️‍🩹";
-    const resultMessage = `🎰 | SLOT MACHINE\n──────────────\n [ ${s.join(" | ")} ]\n──────────────\n📢 ${status}\n💰 ${win ? "Won: " + formatMoney(bonus) : "Lost: " + formatMoney(betAmount)}$\n💳 Balance: ${formatMoney(finalMoney)}$\n📜 Usage: ${global.slotLimit[senderID].count}/${maxSpins}`;
+    const resultMessage = `🎰 | SLOT MACHINE\n──────────────\n [ ${s.join(" | ")} ]\n──────────────\n🎉 ${status}\n💰 ${win ? "Won: " + formatMoney(bonus) : "Lost: " + formatMoney(betAmount)}$\n💳 Balance: ${formatMoney(finalMoney)}$\n📜 Usage: ${global.slotLimit[senderID].count}/${maxSpins}`;
 
     await api.editMessage(resultMessage, sent.messageID);
   }
