@@ -1,6 +1,34 @@
 const axios = require("axios");
 
-const API_URL = "https://xalman-apis.vercel.app/api/cdp2";
+const API_CONFIG_URL = "https://raw.githubusercontent.com/goatbotnx/xalmanx210/refs/heads/main/apis.json";
+const API_KEY = "xalman-hub";
+let apiBaseUrl = null;
+let apiConfigRequest = null;
+
+async function getApiBaseUrl() {
+  if (apiBaseUrl) return apiBaseUrl;
+
+  if (!apiConfigRequest) {
+    apiConfigRequest = axios
+      .get(API_CONFIG_URL, { timeout: 15000 })
+      .then(({ data }) => {
+        const baseUrl = data?.[API_KEY];
+
+        if (typeof baseUrl !== "string" || !baseUrl.trim()) {
+          throw new Error(`Missing API key in apis.json: ${API_KEY}`);
+        }
+
+        apiBaseUrl = baseUrl.replace(/\/+$/, "");
+        return apiBaseUrl;
+      })
+      .finally(() => {
+        apiConfigRequest = null;
+      });
+  }
+
+  return apiConfigRequest;
+}
+
 const MAX_RETRIES = 3;
 
 module.exports = {
@@ -10,7 +38,7 @@ module.exports = {
     version: "2.1",
     author: "xalman",
     description: "Random K-Pop Matching Couple DP",
-    category: "love",
+    category: "FUN & SOCIAL",
     cooldown: 5,
     guide: {
       en: "{pn} - Random K-Pop Couple DP\n{pn} list - Show total available Couple DPs"
@@ -18,6 +46,7 @@ module.exports = {
   },
 
   onStart: async function ({ api, event, args }) {
+    const API_URL = `${await getApiBaseUrl()}/api/cdp2`;
     const { threadID, messageID } = event;
 
     if (args[0]?.toLowerCase() === "list") {
@@ -47,7 +76,7 @@ module.exports = {
       }
     }
 
-    api.setMessageReaction("🎀", messageID, () => {}, true);
+    api.setMessageReaction("⏳", messageID, () => {}, true);
 
     const headers = {
       "User-Agent":
