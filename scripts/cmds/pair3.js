@@ -12,7 +12,7 @@ module.exports = {
     role: 0,
     shortDescription: "Pair Match",
     longDescription: "Reply, mention or random pair",
-    category: "fun",
+    category: "love",
     guide: {
       en: "{pn} [reply/@mention]"
     }
