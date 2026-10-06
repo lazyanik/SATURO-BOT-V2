@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=200&section=header&text=SATURO%20BOT%20V2&fontSize=60&fontAlignY=38&animation=fadeIn&desc=Enhanced%20Edition&descAlignY=58&descSize=22" width="100%" alt="SATURO BOT V2 Header">
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=2,12,24&height=200&section=header&text=SATURO%20BOT%20V2&fontSize=60&fontAlignY=38&animation=fadeIn&desc=Enhanced%20Edition&descAlignY=58&descSize=22" width="100%" alt="SATURO BOT V2 Header">
 
 <img src="https://i.ibb.co/RQ28H2p/banner.png" alt="SATURO BOT V2 Banner">
 
@@ -10,7 +10,7 @@
 </h1>
 
 <a href="https://github.com/lazyanik/SATURO-BOT-V2">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=20&duration=3000&pause=800&color=00F7FF&center=true&vCenter=true&width=700&lines=A+feature-rich+Facebook+Messenger+bot+framework;Web+dashboard+%2B+MongoDB+%2F+SQLite+support;Modern+%E2%9A%A1+Hardened+%F0%9F%9B%A1%EF%B8%8F+Fast+%F0%9F%9A%80+Customizable+%F0%9F%8E%A8" alt="Typing animation">
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=20&duration=3000&pause=800&color=A78BFA&center=true&vCenter=true&width=700&lines=A+feature-rich+Facebook+Messenger+bot+framework;Web+dashboard+%2B+MongoDB+%2F+SQLite+support;Modern+%E2%9A%A1+Hardened+%F0%9F%9B%A1%EF%B8%8F+Fast+%F0%9F%9A%80+Customizable+%F0%9F%8E%A8" alt="Typing animation">
 </a>
 
 <p>
@@ -19,7 +19,7 @@
 
 <p>
   <img src="https://img.shields.io/badge/Node.js-22.x-brightgreen.svg?style=flat-square" alt="Node.js 22.x">
-  <img alt="version" src="https://img.shields.io/badge/dynamic/json?color=brightgreen&label=version&prefix=v&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Flazyanik%2FSATURO-BOT-V2%2Fmain%2Fpackage.json&style=flat-square">
+  <img alt="version" src="https://img.shields.io/badge/dynamic/json?color=a78bfa&label=version&prefix=v&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Flazyanik%2FSATURO-BOT-V2%2Fmain%2Fpackage.json&style=flat-square&cacheSeconds=300">
   <img alt="license" src="https://img.shields.io/badge/license-MIT-green?style=flat-square">
   <img alt="platform" src="https://img.shields.io/badge/platform-Node.js%20%7C%20Docker-informational?style=flat-square">
 </p>
@@ -339,7 +339,7 @@ languages/events/
 
 <div align="center">
 
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&duration=2500&pause=700&color=FF6AD5&center=true&vCenter=true&width=650&lines=%F0%9F%9A%80+Fast+%E2%80%A2+Stable+%E2%80%A2+Powerful;%F0%9F%A4%96+Build+your+own+Messenger+bot;%E2%9C%A8+Customize+everything+your+way;%F0%9F%95%8A%EF%B8%8F+Welcome+to+SATURO+BOT+V2" alt="Animated tagline">
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&duration=2500&pause=700&color=F472B6&center=true&vCenter=true&width=650&lines=%F0%9F%9A%80+Fast+%E2%80%A2+Stable+%E2%80%A2+Powerful;%F0%9F%A4%96+Build+your+own+Messenger+bot;%E2%9C%A8+Customize+everything+your+way;%F0%9F%95%8A%EF%B8%8F+Welcome+to+SATURO+BOT+V2" alt="Animated tagline">
 
 <br>
 
@@ -347,23 +347,24 @@ languages/events/
 
 ### 🌟 Stay Connected
 
+<!-- Live counters: refreshed every ~5 minutes, so new stars/forks show up automatically -->
 <a href="https://github.com/lazyanik/SATURO-BOT-V2/stargazers">
-  <img src="https://img.shields.io/github/stars/lazyanik/SATURO-BOT-V2?style=for-the-badge&logo=github&color=ffd700" alt="Stars">
+  <img src="https://img.shields.io/github/stars/lazyanik/SATURO-BOT-V2?style=for-the-badge&logo=github&color=f59e0b&cacheSeconds=300" alt="Stars">
 </a>
-<a href="https://github.com/lazyanik/SATURO-BOT-V2/network/members">
-  <img src="https://img.shields.io/github/forks/lazyanik/SATURO-BOT-V2?style=for-the-badge&logo=github&color=00f7ff" alt="Forks">
+<a href="https://github.com/lazyanik/SATURO-BOT-V2/forks">
+  <img src="https://img.shields.io/github/forks/lazyanik/SATURO-BOT-V2?style=for-the-badge&logo=github&color=a78bfa&cacheSeconds=300" alt="Forks">
 </a>
 <a href="https://github.com/lazyanik/SATURO-BOT-V2/issues">
-  <img src="https://img.shields.io/github/issues/lazyanik/SATURO-BOT-V2?style=for-the-badge&logo=github&color=ff6ad5" alt="Issues">
+  <img src="https://img.shields.io/github/issues/lazyanik/SATURO-BOT-V2?style=for-the-badge&logo=github&color=f43f5e&cacheSeconds=300" alt="Issues">
 </a>
 <a href="https://github.com/lazyanik/SATURO-BOT-V2/commits/main">
-  <img src="https://img.shields.io/github/last-commit/lazyanik/SATURO-BOT-V2?style=for-the-badge&logo=github&color=7cfc00" alt="Last commit">
+  <img src="https://img.shields.io/github/last-commit/lazyanik/SATURO-BOT-V2?style=for-the-badge&logo=github&color=22d3ee&cacheSeconds=300" alt="Last commit">
 </a>
 
 <br><br>
 
 <a href="https://github.com/lazyanik/SATURO-BOT-V2">
-  <img src="https://img.shields.io/badge/⭐_Star_this_repo-if_you_like_it-ffd700?style=for-the-badge" alt="Star this repo">
+  <img src="https://img.shields.io/badge/⭐_Star_this_repo-if_you_like_it-f59e0b?style=for-the-badge" alt="Star this repo">
 </a>
 
 <br><br>
@@ -512,7 +513,7 @@ If you use or modify this project, please keep the original author and developer
 
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=140&section=footer&text=SATURO%20BOT%20V2&fontSize=30&fontAlignY=70&animation=twinkling" width="100%" alt="Footer">
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=2,12,24&height=140&section=footer&text=SATURO%20BOT%20V2&fontSize=30&fontAlignY=70&animation=twinkling" width="100%" alt="Footer">
 
 ### 🕊️✨ SATURO BOT V2 ✨🕊️
 
