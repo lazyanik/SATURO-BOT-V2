@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/lazyanik/SATURO-BOT-V2/main/assets/header-hearts.svg" width="100%" alt="SATURO BOT V2 Header">
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=2,12,24&height=200&section=header&text=SATURO%20BOT%20V2&fontSize=60&fontAlignY=38&animation=fadeIn&desc=Enhanced%20Edition&descAlignY=58&descSize=22" width="100%" alt="SATURO BOT V2 Header">
 
 <img src="https://i.ibb.co/RQ28H2p/banner.png" alt="SATURO BOT V2 Banner">
 
@@ -513,7 +513,7 @@ If you use or modify this project, please keep the original author and developer
 
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/lazyanik/SATURO-BOT-V2/main/assets/footer-hearts.svg" width="100%" alt="SATURO BOT V2 Footer">
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=2,12,24&height=140&section=footer&text=SATURO%20BOT%20V2&fontSize=30&fontAlignY=70&animation=twinkling" width="100%" alt="Footer">
 
 ### 🕊️✨ SATURO BOT V2 ✨🕊️
 
