@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="./assets/header-hearts.svg" width="100%" alt="SATURO BOT V2 Header">
+<img src="https://raw.githubusercontent.com/lazyanik/SATURO-BOT-V2/main/assets/header-hearts.svg" width="100%" alt="SATURO BOT V2 Header">
 
 <img src="https://i.ibb.co/RQ28H2p/banner.png" alt="SATURO BOT V2 Banner">
 
@@ -513,7 +513,7 @@ If you use or modify this project, please keep the original author and developer
 
 <div align="center">
 
-<img src="./assets/footer-hearts.svg" width="100%" alt="SATURO BOT V2 Footer">
+<img src="https://raw.githubusercontent.com/lazyanik/SATURO-BOT-V2/main/assets/footer-hearts.svg" width="100%" alt="SATURO BOT V2 Footer">
 
 ### 🕊️✨ SATURO BOT V2 ✨🕊️
 
